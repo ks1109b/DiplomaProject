@@ -14,9 +14,9 @@ compileTestJava.options.encoding = "UTF-8"
 
 allure {
     autoconfigure = true
-    version = '2.13.9' // Latest Allure Version
+    version = '2.13.9'
     useJUnit5 {
-        version = '2.13.9' // Latest Allure Version
+        version = '2.13.9'
     }
 }
 
@@ -31,12 +31,12 @@ dependencies {
     testImplementation 'mysql:mysql-connector-java:8.0.21'
     testImplementation 'commons-dbutils:commons-dbutils:1.7'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
-    testImplementation 'com.codeborne:selenide:5.13.1'
+    testImplementation 'com.codeborne:selenide:5.15.1'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
 
     testImplementation 'io.rest-assured:rest-assured:4.3.1'
     testImplementation 'io.qameta.allure:allure-selenide:2.13.9'
-    testImplementation 'org.postgresql:postgresql:42.2.0'
+    testImplementation 'org.postgresql:postgresql:42.2.14'
 }
 
 test {
