@@ -4,43 +4,41 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selectors.withText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selectors.*;
+import static com.codeborne.selenide.Selenide.*;
 
 public class BuyInCreditPage {
 
-    private final SelenideElement cardNumber = $(byText("Номер карты")).parent().$(".input__control");
-    private final SelenideElement cardMonth = $(byText("Месяц")).parent().$(".input__control");
-    private final SelenideElement cardYear = $(byText("Год")).parent().$(".input__control");
-    private final SelenideElement cardOwner = $(byText("Владелец")).parent().$(".input__control");
-    private final SelenideElement cardCvcCvv = $(byText("CVC/CVV")).parent().$(".input__control");
+    private final SelenideElement numberField = $(byText("Номер карты")).parent().$(".input__control");
+    private final SelenideElement monthField = $(byText("Месяц")).parent().$(".input__control");
+    private final SelenideElement yearField = $(byText("Год")).parent().$(".input__control");
+    private final SelenideElement ownerField = $(byText("Владелец")).parent().$(".input__control");
+    private final SelenideElement cvcCvvField = $(byText("CVC/CVV")).parent().$(".input__control");
     private final SelenideElement continueButton = $$(".button__content").find(exactText("Продолжить"));
     private final SelenideElement success = $(withText("Успешно"));
     private final SelenideElement error = $(withText("Ошибка"));
 
     public BuyInCreditPage() {
-        SelenideElement heading = $("h3").shouldHave(text("Кредит по данным карты"));
+        SelenideElement heading = $$("h3").find(text("Кредит по данным карты"));
         heading.shouldBe(visible);
     }
 
     public BuyByCardPage sendData(String number, String month, String year, String owner, String cvcCvv) {
-        cardNumber.setValue(number);
-        cardMonth.setValue(month);
-        cardYear.setValue(year);
-        cardOwner.setValue(owner);
-        cardCvcCvv.setValue(cvcCvv);
+        numberField.setValue(number);
+        monthField.setValue(month);
+        yearField.setValue(year);
+        ownerField.setValue(owner);
+        cvcCvvField.setValue(cvcCvv);
         continueButton.click();
         return new BuyByCardPage();
     }
 
     public BuyByCardPage sendData(DataHelper.CardInfo cardInfo) {
-        cardNumber.setValue(cardInfo.getNumber());
-        cardMonth.setValue(cardInfo.getMonth());
-        cardYear.setValue(cardInfo.getYear());
-        cardOwner.setValue(cardInfo.getOwner());
-        cardCvcCvv.setValue(cardInfo.getCvcCvv());
+        numberField.setValue(cardInfo.getNumber());
+        monthField.setValue(cardInfo.getMonth());
+        yearField.setValue(cardInfo.getYear());
+        ownerField.setValue(cardInfo.getOwner());
+        cvcCvvField.setValue(cardInfo.getCvcCvv());
         continueButton.click();
         return new BuyByCardPage();
     }

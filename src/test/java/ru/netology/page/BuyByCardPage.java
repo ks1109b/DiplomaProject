@@ -9,46 +9,44 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class BuyByCardPage {
 
-    private final SelenideElement cardNumber = $(byText("Номер карты")).parent().$(".input__control");
-    private final SelenideElement cardMonth = $(byText("Месяц")).parent().$(".input__control");
-    private final SelenideElement cardYear = $(byText("Год")).parent().$(".input__control");
-    private final SelenideElement cardOwner = $(byText("Владелец")).parent().$(".input__control");
-    private final SelenideElement cardCvcCvv = $(byText("CVC/CVV")).parent().$(".input__control");
+    private final SelenideElement numberField = $(byText("Номер карты")).parent().$(".input__control");
+    private final SelenideElement monthField = $(byText("Месяц")).parent().$(".input__control");
+    private final SelenideElement yearField = $(byText("Год")).parent().$(".input__control");
+    private final SelenideElement ownerField = $(byText("Владелец")).parent().$(".input__control");
+    private final SelenideElement cvcCvcField = $(byText("CVC/CVV")).parent().$(".input__control");
     private final SelenideElement continueButton = $$(".button__content").find(exactText("Продолжить"));
     private final SelenideElement success = $(withText("Успешно"));
     private final SelenideElement error = $(withText("Ошибка"));
 
     public BuyByCardPage() {
-        SelenideElement heading = $("h3").shouldHave(text("Оплата по карте"));
+        SelenideElement heading = $$("h3").find(exactText("Оплата по карте"));
         heading.shouldBe(visible);
     }
 
-    public BuyByCardPage sendData(String number, String month, String year, String owner, String cvcCvv) {
-        cardNumber.setValue(number);
-        cardMonth.setValue(month);
-        cardYear.setValue(year);
-        cardOwner.setValue(owner);
-        cardCvcCvv.setValue(cvcCvv);
+    public void sendData(String number, String month, String year, String owner, String cvcCvv) {
+        numberField.setValue(number);
+        monthField.setValue(month);
+        yearField.setValue(year);
+        ownerField.setValue(owner);
+        cvcCvcField.setValue(cvcCvv);
         continueButton.click();
-        return new BuyByCardPage();
     }
 
-    public BuyByCardPage sendData(DataHelper.CardInfo cardInfo) {
-        cardNumber.setValue(cardInfo.getNumber());
-        cardMonth.setValue(cardInfo.getMonth());
-        cardYear.setValue(cardInfo.getYear());
-        cardOwner.setValue(cardInfo.getOwner());
-        cardCvcCvv.setValue(cardInfo.getCvcCvv());
+    public void sendData(DataHelper.CardInfo cardInfo) {
+        numberField.setValue(cardInfo.getNumber());
+        monthField.setValue(cardInfo.getMonth());
+        yearField.setValue(cardInfo.getYear());
+        ownerField.setValue(cardInfo.getOwner());
+        cvcCvcField.setValue(cardInfo.getCvcCvv());
         continueButton.click();
-        return new BuyByCardPage();
     }
 
-    public void checkMessageSuccess() {
+    public void checkSuccess() {
         success.waitUntil(visible, 15000);
         error.shouldBe(hidden);
     }
 
-    public void checkMessageError() {
+    public void checkError() {
         error.waitUntil(visible, 15000);
         success.shouldBe(hidden);
     }
