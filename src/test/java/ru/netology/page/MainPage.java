@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.*;
 
 public class MainPage {
 
-    private final String mailUrl = "http://127.0.0.1:8080";
+    private final String mailUrl = System.getProperty("sut.url");
     private final SelenideElement byCardButton = $(byText("Купить"));
     private final SelenideElement inCreditButton = $(byText("Купить в кредит"));
 

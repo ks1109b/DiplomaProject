@@ -15,8 +15,13 @@ public class BuyByCardPage {
     private final SelenideElement ownerField = $(byText("Владелец")).parent().$(".input__control");
     private final SelenideElement cvcCvcField = $(byText("CVC/CVV")).parent().$(".input__control");
     private final SelenideElement continueButton = $$(".button__content").find(exactText("Продолжить"));
-    private final SelenideElement success = $(withText("Успешно"));
-    private final SelenideElement error = $(withText("Ошибка"));
+    private final SelenideElement success = $$(".notification__title").find(text("Успешно"));
+    private final SelenideElement error = $$(".notification__title").find(text("Ошибка"));
+    private final SelenideElement numberUnderField = $(byText("Номер карты")).parent().$(".input__sub");
+    private final SelenideElement monthUnderField = $(byText("Месяц")).parent().$(".input__sub");
+    private final SelenideElement yearUnderField = $(byText("Год")).parent().$(".input__sub");
+    private final SelenideElement ownerUnderField = $(byText("Владелец")).parent().$(".input__sub");
+    private final SelenideElement cvcCvcUnderField = $(byText("CVC/CVV")).parent().$(".input__sub");
 
     public BuyByCardPage() {
         SelenideElement heading = $$("h3").find(exactText("Оплата по карте"));
@@ -49,5 +54,30 @@ public class BuyByCardPage {
     public void checkError() {
         error.waitUntil(visible, 15000);
         success.shouldBe(hidden);
+    }
+
+    public String getNumberUnderField() {
+        String actual = numberUnderField.innerText();
+        return actual;
+    }
+
+    public String getMonthUnderField() {
+        String actual = monthUnderField.innerText();
+        return actual;
+    }
+
+    public String getYearUnderField() {
+        String actual = yearUnderField.innerText();
+        return actual;
+    }
+
+    public String getOwnerUnderField() {
+        String actual = ownerUnderField.innerText();
+        return actual;
+    }
+
+    public String getCvcCvcUnderField() {
+        String actual = cvcCvcUnderField.innerText();
+        return actual;
     }
 }

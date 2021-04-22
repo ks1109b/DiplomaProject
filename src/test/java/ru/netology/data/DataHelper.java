@@ -27,25 +27,41 @@ public class DataHelper {
 
     public static CardInfo getApprovedCard() {
         return new CardInfo("4444 4444 4444 4441",
-                getMoth(),
+                getMonth(),
                 getYear(5),
-                faker.name().lastName() + " " + faker.name().firstName(),
-                faker.numerify("###"));
+                getOwner(),
+                getCvcCvv());
     }
 
     public static CardInfo getDeclinedCard() {
         return new CardInfo("4444 4444 4444 4442",
-                getMoth(),
+                getMonth(),
                 getYear(5),
-                faker.name().lastName() + " " + faker.name().firstName(),
-                faker.numerify("###"));
+                getOwner(),
+                getCvcCvv());
     }
 
-    public static String getMoth() {
+    public static String getValidNumber() {
+        return "4444444444444441";
+    }
+
+    public static String getInvalidNumber() {
+        return "4444444444444442";
+    }
+
+    public static String getMonth() {
         return String.format("%02d", calendar.get(Calendar.MONTH));
     }
 
     public static String getYear(int shift) {
         return String.valueOf(calendar.get(Calendar.YEAR) + shift).substring(2);
+    }
+
+    public static String getOwner() {
+        return faker.name().lastName() + " " + faker.name().firstName();
+    }
+
+    public static String getCvcCvv() {
+        return faker.numerify("###");
     }
 }

@@ -9,15 +9,14 @@ import ru.netology.data.mode.*;
 import java.sql.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DBUtils {
 
     private static Connection conn;
     private static final String url = System.getProperty("db.url");
-    private static final String user = "app";
-    private static final String password = "pass";
+    private static final String user = System.getProperty("db.login");
+    private static final String password = System.getProperty("db.pass");
 
     private static final String creditSQLQuery = "SELECT * FROM credit_request_entity WHERE created IN (SELECT max(created) " +
             "FROM credit_request_entity);";
@@ -25,11 +24,6 @@ public class DBUtils {
             "FROM order_entity);";
     private static final String paymentSQLQuery = "SELECT * FROM payment_entity WHERE created IN (SELECT max(created) " +
             "FROM payment_entity);";
-
-//    private static Connection getConnection() throws SQLException {
-//            val conn = DriverManager.getConnection(url, user, password);
-//        return conn;
-//    }
 
     private static Connection getConnection() throws SQLException {
         if (conn == null)
@@ -44,18 +38,6 @@ public class DBUtils {
         runner.update(getConnection(), "DELETE FROM order_entity;");
     }
 
-//    public static void clearDBTables() throws SQLException {
-//        val runner = new QueryRunner();
-//        try (val conn = getConnection()
-//        ) {
-//            runner.update(conn, "DELETE  FROM credit_request_entity;");
-//            runner.update(conn, "DELETE  FROM payment_entity;");
-//            runner.update(conn, "DELETE  FROM order_entity;");
-//        } catch (SQLException e) {
-//            System.out.println(e.toString());
-//        }
-//    }
-
     public static void checkLastPaymentStatus(String status) throws SQLException {
         val runner = new QueryRunner();
         val paymentRow = runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class));
@@ -68,6 +50,14 @@ public class DBUtils {
         assertEquals(status, creditRow.status, "Credit status should be as");
     }
 
+    public static void checkRowPaymentNotNull() throws SQLException {
+        val runner = new QueryRunner();
+        val orderRow = runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class));
+        val paymentRow = runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class));
+        assertNotNull(orderRow);
+        assertNotNull(paymentRow);
+    }
+
     public static void checkRowCreditNotNull() throws SQLException {
         val runner = new QueryRunner();
         val orderRow = runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class));
@@ -76,12 +66,20 @@ public class DBUtils {
         assertNotNull(creditRow);
     }
 
-    public static void checkRowPaymentNotNull() throws SQLException {
+    public static void checkRowPaymentIsNull() throws SQLException {
         val runner = new QueryRunner();
         val orderRow = runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class));
         val paymentRow = runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class));
-        assertNotNull(orderRow);
-        assertNotNull(paymentRow);
+        assertNull(orderRow);
+        assertNull(paymentRow);
+    }
+
+    public static void checkRowCreditIsNull() throws SQLException {
+        val runner = new QueryRunner();
+        val orderRow = runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class));
+        val creditRow = runner.query(getConnection(), creditSQLQuery, new BeanHandler<>(CreditEntity.class));
+        assertNull(orderRow);
+        assertNull(creditRow);
     }
 
     public static void compareExpectedAmountWithActual(int amount) throws SQLException {
@@ -103,5 +101,4 @@ public class DBUtils {
         val orderRow = runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class));
         assertEquals(creditRow.bank_id, orderRow.payment_id, "Credit and Order IDs are not equal");
     }
-
 }

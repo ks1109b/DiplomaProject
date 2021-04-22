@@ -23,7 +23,6 @@ allure {
 repositories {
     jcenter()
     mavenCentral()
-
 }
 
 dependencies {
