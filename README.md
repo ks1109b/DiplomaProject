@@ -36,54 +36,54 @@
 
 ## II. Автоматизация
 
-### Предварительная подготовка к тестированию
+* ### Предварительная подготовка к тестированию
 
-1. Убедиться в присутствии необходимого ПО. Список ПО и инструкции по его установке можно найти [здесь](documentation/Preparation.md).
-1. Скачать проект ZIP-файлом по [ссылке](https://github.com/ks1109b/DiplomaProject/archive/refs/heads/main.zip).
-1. Распаковать скаченный файл в удобном месте.
-1. Открыть проект в IntelliJ IDEA.
+   * Убедиться в присутствии необходимого ПО. Список ПО и инструкции по его установке можно найти [здесь](documentation/Preparation.md).
+   * Скачать проект ZIP-файлом по [ссылке](https://github.com/ks1109b/DiplomaProject/archive/refs/heads/main.zip).
+   * Распаковать скаченный файл в удобном месте.
+   * Открыть проект в IntelliJ IDEA.
+      ```
+      *File -> Open... -> Выделить папку, в которой лежит файл README.md -> OK*
+      ```
+      
+* ### Запуск тестов
 
-    *File -> Open... -> Выделить папку, в которой лежит файл README.md -> OK*
-
-### Запуск тестов
-
-Для дальнейшей работы необходимо запустить контейнеры следующей командой:
+   Для дальнейшей работы необходимо запустить контейнеры следующей командой:
    ```  
-    docker-compose up -d
+   docker-compose up -d
    ```
-    
-#### Для работы с MySQL
+   * #### Для работы с MySQL
 
-1. Запуск SUT:
-    ```
-    java -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -jar artifacts/aqa-shop.jar
-    ```
-1. Запуск тестов осуществить в новом окне терминала:
-    ```
-    gradlew test -Ddb.url=jdbc:mysql://localhost:3306/app allureReport
-    ```
+       * Запуск SUT:
+       ```
+       java -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -jar artifacts/aqa-shop.jar
+       ```
+       * Запуск тестов осуществить в новом окне терминала:
+       ```
+       gradlew test -Ddb.url=jdbc:mysql://localhost:3306/app allureReport
+       ```
 
-#### Для работы с Postgres
+   * #### Для работы с Postgres
 
-1. Запуск SUT
-    ```
-    java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar artifacts/aqa-shop.jar allureReport
-    ```
-1. Запуск тестов осуществить в новом окне терминала:
-    ```
-    gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app
-    ```
+      * Запуск SUT
+      ```
+      java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar artifacts/aqa-shop.jar allureReport
+      ```
+      * Запуск тестов осуществить в новом окне терминала:
+      ```
+      gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app
+      ```
 
-### Просмотр отчета Allure
+* ### Просмотр отчета Allure
 
-Для открытия отчета в браузере выполнить команду:
+   Для открытия отчета в браузере выполнить команду:
    ```  
    gradlew allureServe
    ```
    
-### Остановка контейнеров
+* ### Остановка контейнеров
 
-Чтобы остановить работу контейнеров, выполните следующую команду:
+   Чтобы остановить работу контейнеров, выполните следующую команду:
    ```  
     docker-compose down
    ```
