@@ -63,24 +63,24 @@
    * #### Для работы с MySQL
 
        * Запуск SUT:
-       ```
-       java -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -jar artifacts/aqa-shop.jar
-       ```
+         ```
+         java -Dspring.datasource.url=jdbc:mysql://localhost:3306/app -jar artifacts/aqa-shop.jar
+         ```
        * Запуск тестов осуществить в новом окне терминала:
-       ```
-       gradlew test -Ddb.url=jdbc:mysql://localhost:3306/app allureReport
-       ```
+         ```
+         gradlew test -Ddb.url=jdbc:mysql://localhost:3306/app allureReport
+         ```
 
    * #### Для работы с Postgres
 
       * Запуск SUT
-      ```
-      java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar artifacts/aqa-shop.jar allureReport
-      ```
+        ```
+        java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar artifacts/aqa-shop.jar allureReport
+        ```
       * Запуск тестов осуществить в новом окне терминала:
-      ```
-      gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app
-      ```
+        ```
+        gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app
+        ```
 
 * ### Просмотр отчета Allure
 
