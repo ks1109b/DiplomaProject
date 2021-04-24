@@ -69,11 +69,11 @@ public class BuyByCardTest {
                 buyByCardPage.getYearUnderField(),
                 buyByCardPage.getOwnerUnderField(),
                 buyByCardPage.getCvcCvcUnderField()};
-        String[] expected = {"Неверный формат",
-                "Неверный формат",
-                "Неверный формат",
+        String[] expected = {"Поле обязательно для заполнения",
                 "Поле обязательно для заполнения",
-                "Неверный формат"};
+                "Поле обязательно для заполнения",
+                "Поле обязательно для заполнения",
+                "Поле обязательно для заполнения"};
         assertArrayEquals(expected, actual);
     }
 
