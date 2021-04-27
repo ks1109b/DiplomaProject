@@ -32,8 +32,6 @@ dependencies {
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
     testImplementation 'com.codeborne:selenide:5.15.1'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.30'
-
-    testImplementation 'io.rest-assured:rest-assured:4.3.1'
     testImplementation 'io.qameta.allure:allure-selenide:2.13.9'
     testImplementation 'org.postgresql:postgresql:42.2.14'
 }

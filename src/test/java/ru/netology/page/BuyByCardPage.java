@@ -56,28 +56,23 @@ public class BuyByCardPage {
         success.shouldBe(hidden);
     }
 
-    public String getNumberUnderField() {
-        String actual = numberUnderField.innerText();
-        return actual;
+    public String getTextUnderNumberField() {
+        return numberUnderField.innerText();
     }
 
-    public String getMonthUnderField() {
-        String actual = monthUnderField.innerText();
-        return actual;
+    public String getTextUnderMonthField() {
+        return monthUnderField.innerText();
     }
 
-    public String getYearUnderField() {
-        String actual = yearUnderField.innerText();
-        return actual;
+    public String getTextUnderYearField() {
+        return yearUnderField.innerText();
     }
 
-    public String getOwnerUnderField() {
-        String actual = ownerUnderField.innerText();
-        return actual;
+    public String getTextUnderOwnerField() {
+        return ownerUnderField.innerText();
     }
 
-    public String getCvcCvcUnderField() {
-        String actual = cvcCvcUnderField.innerText();
-        return actual;
+    public String getTextUnderCvcCvcField() {
+        return cvcCvcUnderField.innerText();
     }
 }
