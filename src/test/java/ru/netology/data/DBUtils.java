@@ -24,8 +24,11 @@ public class DBUtils {
 
     @SneakyThrows
     private static Connection getConnection() {
-        if (conn == null)
+        try {
             conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return conn;
     }
 
@@ -40,42 +43,78 @@ public class DBUtils {
     @SneakyThrows
     public static String getLastPaymentStatus() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class)).getStatus();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class)).getStatus();
+        } catch (NullPointerException e) {
+            return "Empty last payment status";
+        }
     }
 
     @SneakyThrows
     public static String getLastCreditStatus() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), creditSQLQuery, new BeanHandler<>(CreditEntity.class)).getStatus();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), creditSQLQuery, new BeanHandler<>(CreditEntity.class)).getStatus();
+        } catch (NullPointerException e) {
+            return "Empty last credit status";
+        }
     }
 
     @SneakyThrows
     public static int getAmountPayment() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class)).getAmount();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class)).getAmount();
+        } catch (NullPointerException e) {
+            return Integer.parseInt("Empty amount payment");
+        }
     }
 
     @SneakyThrows
     public static String getTransactionIdFromPayment() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class)).getTransaction_id();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class)).getTransaction_id();
+        } catch (NullPointerException e) {
+            return "Empty transaction ID";
+        }
+
     }
 
     @SneakyThrows
     public static String getPaymentIdFromOrder() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class)).getPayment_id();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class)).getPayment_id();
+        } catch (NullPointerException e) {
+            return "Empty payment ID";
+        }
     }
 
     @SneakyThrows
     public static String getBankIdFromCredit() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(CreditEntity.class)).getBank_id();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(CreditEntity.class)).getBank_id();
+        } catch (NullPointerException e) {
+            return "Empty bank ID";
+        }
     }
 
     @SneakyThrows
     public static String getCreditIdFromOrder() {
         val runner = new QueryRunner();
-        return runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class)).getCredit_id();
+        try {
+            conn = getConnection();
+            return runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class)).getCredit_id();
+        } catch (NullPointerException e) {
+            return "Empty Credit ID";
+        }
     }
 }

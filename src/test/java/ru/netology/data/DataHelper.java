@@ -18,10 +18,6 @@ public class DataHelper {
         public String cvcCvv;
     }
 
-//    public static CardInfo getCardInfo(String number, String month, String year, String owner, String cvcCvv) {
-//        return new CardInfo(number, month, year, owner, cvcCvv);
-//    }
-
     static Faker faker = new Faker(new Locale("en"));
     static Calendar calendar = new GregorianCalendar();
 

@@ -8,8 +8,7 @@ import ru.netology.page.BuyByCardPage;
 import ru.netology.page.BuyInCreditPage;
 import ru.netology.page.MainPage;
 
-import java.sql.SQLException;
-
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DBUtils.*;
 
@@ -35,7 +34,7 @@ public class DBTest {
     }
 
     @AfterEach
-    void clearAll() throws SQLException {
+    void clearAll() {
         clearDBTables();
     }
 
@@ -50,9 +49,12 @@ public class DBTest {
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(validCard);
         buyByCardPage.checkSuccess();
-        assertEquals(tourAmount, getAmountPayment());
-        assertEquals(APPROVED_STATUS, getLastPaymentStatus());
-        assertEquals(getTransactionIdFromPayment(), getPaymentIdFromOrder());
+        assertAll(
+                () -> assertEquals(tourAmount, getAmountPayment()),
+                () -> assertEquals(APPROVED_STATUS, getLastPaymentStatus()),
+                () -> assertEquals(getTransactionIdFromPayment(), getPaymentIdFromOrder())
+        );
+
     }
 
     @Test
@@ -61,9 +63,11 @@ public class DBTest {
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(invalidCard);
 //        buyByCardPage.checkError();
-        assertEquals(tourAmount, getAmountPayment());
-        assertEquals(DECLINED_STATUS, getLastPaymentStatus());
-        assertEquals(getTransactionIdFromPayment(), getPaymentIdFromOrder());
+        assertAll(
+                () -> assertEquals(tourAmount, getAmountPayment()),
+                () -> assertEquals(DECLINED_STATUS, getLastPaymentStatus()),
+                () -> assertEquals(getTransactionIdFromPayment(), getPaymentIdFromOrder())
+        );
     }
 
     @Test
@@ -72,8 +76,10 @@ public class DBTest {
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(validCard);
         buyInCreditPage.checkSuccess();
-        assertEquals(APPROVED_STATUS, getLastCreditStatus());
-        assertEquals(getBankIdFromCredit(), getCreditIdFromOrder());
+        assertAll(
+                () -> assertEquals(APPROVED_STATUS, getLastCreditStatus()),
+                () -> assertEquals(getBankIdFromCredit(), getCreditIdFromOrder())
+        );
     }
 
     @Test
@@ -82,7 +88,9 @@ public class DBTest {
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(invalidCard);
 //        buyInCreditPage.checkError();
-        assertEquals(DECLINED_STATUS, getLastCreditStatus());
-        assertEquals(getBankIdFromCredit(), getCreditIdFromOrder());
+        assertAll(
+                () -> assertEquals(DECLINED_STATUS, getLastCreditStatus()),
+                () -> assertEquals(getBankIdFromCredit(), getCreditIdFromOrder())
+        );
     }
 }

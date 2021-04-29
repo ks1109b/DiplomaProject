@@ -75,11 +75,11 @@
 
       * Запуск SUT
         ```
-        java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar artifacts/aqa-shop.jar allureReport
+        java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/app -jar artifacts/aqa-shop.jar
         ```
       * Запуск тестов осуществить в новом окне терминала:
         ```
-        gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app
+        gradlew test -Ddb.url=jdbc:postgresql://localhost:5432/app allureReport
         ```
 
 * ### Просмотр отчета Allure
