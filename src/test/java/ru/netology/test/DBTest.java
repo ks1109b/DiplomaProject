@@ -49,12 +49,15 @@ public class DBTest {
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(validCard);
         buyByCardPage.checkSuccess();
+        var amount = getLastPaymentRecord().getAmount();
+        var status = getLastPaymentRecord().getStatus();
+        var transactionId = getLastPaymentRecord().getTransaction_id();
+        var paymentId = getLastOrderRecord().getPayment_id();
         assertAll(
-                () -> assertEquals(tourAmount, getAmountPayment()),
-                () -> assertEquals(APPROVED_STATUS, getLastPaymentStatus()),
-                () -> assertEquals(getTransactionIdFromPayment(), getPaymentIdFromOrder())
+                () -> assertEquals(tourAmount, amount),
+                () -> assertEquals(APPROVED_STATUS, status),
+                () -> assertEquals(transactionId, paymentId)
         );
-
     }
 
     @Test
@@ -63,10 +66,14 @@ public class DBTest {
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(invalidCard);
 //        buyByCardPage.checkError();
+        var amount = getLastPaymentRecord().getAmount();
+        var status = getLastPaymentRecord().getStatus();
+        var transactionId = getLastPaymentRecord().getTransaction_id();
+        var paymentId = getLastOrderRecord().getPayment_id();
         assertAll(
-                () -> assertEquals(tourAmount, getAmountPayment()),
-                () -> assertEquals(DECLINED_STATUS, getLastPaymentStatus()),
-                () -> assertEquals(getTransactionIdFromPayment(), getPaymentIdFromOrder())
+                () -> assertEquals(tourAmount, amount),
+                () -> assertEquals(DECLINED_STATUS, status),
+                () -> assertEquals(transactionId, paymentId)
         );
     }
 
@@ -76,9 +83,12 @@ public class DBTest {
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(validCard);
         buyInCreditPage.checkSuccess();
+        var status = getLastCreditRecord().getStatus();
+        var bankId = getLastCreditRecord().getBank_id();
+        var creditId = getLastOrderRecord().getCredit_id();
         assertAll(
-                () -> assertEquals(APPROVED_STATUS, getLastCreditStatus()),
-                () -> assertEquals(getBankIdFromCredit(), getCreditIdFromOrder())
+                () -> assertEquals(APPROVED_STATUS, status),
+                () -> assertEquals(bankId, creditId)
         );
     }
 
@@ -88,9 +98,12 @@ public class DBTest {
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(invalidCard);
 //        buyInCreditPage.checkError();
+        var status = getLastCreditRecord().getStatus();
+        var bankId = getLastCreditRecord().getBank_id();
+        var creditId = getLastOrderRecord().getCredit_id();
         assertAll(
-                () -> assertEquals(DECLINED_STATUS, getLastCreditStatus()),
-                () -> assertEquals(getBankIdFromCredit(), getCreditIdFromOrder())
+                () -> assertEquals(DECLINED_STATUS, status),
+                () -> assertEquals(bankId, creditId)
         );
     }
 }
