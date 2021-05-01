@@ -8,6 +8,7 @@ import ru.netology.page.BuyByCardPage;
 import ru.netology.page.BuyInCreditPage;
 import ru.netology.page.MainPage;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DBUtils.*;
@@ -48,15 +49,13 @@ public class DBTest {
         mainPage.getBuyByCardPage();
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(validCard);
-        buyByCardPage.checkSuccess();
-        var amount = getLastPaymentRecord().getAmount();
-        var status = getLastPaymentRecord().getStatus();
-        var transactionId = getLastPaymentRecord().getTransaction_id();
-        var paymentId = getLastOrderRecord().getPayment_id();
+        sleep(10000);
+        var paymentRecord = getLastPaymentRecord();
+        var orderRecord = getLastOrderRecord();
         assertAll(
-                () -> assertEquals(tourAmount, amount),
-                () -> assertEquals(APPROVED_STATUS, status),
-                () -> assertEquals(transactionId, paymentId)
+                () -> assertEquals(tourAmount, paymentRecord.getAmount()),
+                () -> assertEquals(APPROVED_STATUS, paymentRecord.getStatus()),
+                () -> assertEquals(paymentRecord.getTransaction_id(), orderRecord.getPayment_id())
         );
     }
 
@@ -65,15 +64,13 @@ public class DBTest {
         mainPage.getBuyByCardPage();
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(invalidCard);
-//        buyByCardPage.checkError();
-        var amount = getLastPaymentRecord().getAmount();
-        var status = getLastPaymentRecord().getStatus();
-        var transactionId = getLastPaymentRecord().getTransaction_id();
-        var paymentId = getLastOrderRecord().getPayment_id();
+        sleep(10000);
+        var paymentRecord = getLastPaymentRecord();
+        var orderRecord = getLastOrderRecord();
         assertAll(
-                () -> assertEquals(tourAmount, amount),
-                () -> assertEquals(DECLINED_STATUS, status),
-                () -> assertEquals(transactionId, paymentId)
+                () -> assertEquals(tourAmount, paymentRecord.getAmount()),
+                () -> assertEquals(DECLINED_STATUS, paymentRecord.getStatus()),
+                () -> assertEquals(paymentRecord.getTransaction_id(), orderRecord.getPayment_id())
         );
     }
 
@@ -82,13 +79,12 @@ public class DBTest {
         mainPage.getBuyInCreditPage();
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(validCard);
-        buyInCreditPage.checkSuccess();
-        var status = getLastCreditRecord().getStatus();
-        var bankId = getLastCreditRecord().getBank_id();
-        var creditId = getLastOrderRecord().getCredit_id();
+        sleep(10000);
+        var creditRecord = getLastCreditRecord();
+        var orderRecord = getLastOrderRecord();
         assertAll(
-                () -> assertEquals(APPROVED_STATUS, status),
-                () -> assertEquals(bankId, creditId)
+                () -> assertEquals(APPROVED_STATUS, creditRecord.getStatus()),
+                () -> assertEquals(creditRecord.getBank_id(), orderRecord.getCredit_id())
         );
     }
 
@@ -97,13 +93,12 @@ public class DBTest {
         mainPage.getBuyInCreditPage();
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(invalidCard);
-//        buyInCreditPage.checkError();
-        var status = getLastCreditRecord().getStatus();
-        var bankId = getLastCreditRecord().getBank_id();
-        var creditId = getLastOrderRecord().getCredit_id();
+        sleep(10000);
+        var creditRecord = getLastCreditRecord();
+        var orderRecord = getLastOrderRecord();
         assertAll(
-                () -> assertEquals(DECLINED_STATUS, status),
-                () -> assertEquals(bankId, creditId)
+                () -> assertEquals(DECLINED_STATUS, creditRecord.getStatus()),
+                () -> assertEquals(creditRecord.getBank_id(), orderRecord.getCredit_id())
         );
     }
 }
