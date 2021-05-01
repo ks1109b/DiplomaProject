@@ -43,34 +43,18 @@ public class DBUtils {
     @SneakyThrows
     public static PaymentEntity getLastPaymentRecord() {
         val runner = new QueryRunner();
-//        try {
-            conn = getConnection();
             return runner.query(getConnection(), paymentSQLQuery, new BeanHandler<>(PaymentEntity.class));
-//        } catch (NullPointerException e) {
-//            return "Empty last payment status";
-//        }
     }
 
     @SneakyThrows
     public static CreditEntity getLastCreditRecord() {
         val runner = new QueryRunner();
-//        try {
-            conn = getConnection();
             return runner.query(getConnection(), creditSQLQuery, new BeanHandler<>(CreditEntity.class));
-//        } catch (NullPointerException e) {
-//            return e.getLocalizedMessage().;
-//        }
     }
 
     @SneakyThrows
     public static OrderEntity getLastOrderRecord() {
         val runner = new QueryRunner();
-//        try {
-//            conn = getConnection();
             return runner.query(getConnection(), orderSQLQuery, new BeanHandler<>(OrderEntity.class));
-//        } catch (NullPointerException e) {
-//            return "Empty payment ID";
-//        }
     }
-
 }
