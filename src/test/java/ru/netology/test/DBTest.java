@@ -4,13 +4,9 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
-import ru.netology.page.BuyByCardPage;
-import ru.netology.page.BuyInCreditPage;
-import ru.netology.page.MainPage;
+import ru.netology.page.*;
 
-import static com.codeborne.selenide.Selenide.sleep;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static ru.netology.data.DBUtils.*;
 
 public class DBTest {
@@ -49,7 +45,7 @@ public class DBTest {
         mainPage.getBuyByCardPage();
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(validCard);
-        sleep(10000);
+        waitingForDecision();
         var paymentRecord = getLastPaymentRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(
@@ -64,7 +60,7 @@ public class DBTest {
         mainPage.getBuyByCardPage();
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(invalidCard);
-        sleep(10000);
+        waitingForDecision();
         var paymentRecord = getLastPaymentRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(
@@ -79,7 +75,7 @@ public class DBTest {
         mainPage.getBuyInCreditPage();
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(validCard);
-        sleep(10000);
+        waitingForDecision();
         var creditRecord = getLastCreditRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(
@@ -93,7 +89,7 @@ public class DBTest {
         mainPage.getBuyInCreditPage();
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(invalidCard);
-        sleep(10000);
+        waitingForDecision();
         var creditRecord = getLastCreditRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(

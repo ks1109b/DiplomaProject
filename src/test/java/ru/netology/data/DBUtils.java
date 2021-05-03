@@ -1,12 +1,16 @@
 package ru.netology.data;
 
-import lombok.SneakyThrows;
-import lombok.val;
+import com.codeborne.selenide.SelenideElement;
+import lombok.*;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import ru.netology.data.models.*;
 
 import java.sql.*;
+
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selenide.$;
 
 public class DBUtils {
 
@@ -21,6 +25,16 @@ public class DBUtils {
             "FROM order_entity);";
     private static final String paymentSQLQuery = "SELECT * FROM payment_entity WHERE created IN (SELECT max(created) " +
             "FROM payment_entity);";
+
+    private static final SelenideElement requestMessage = $(byText("Отправляем запрос в Банк"));
+    private static final SelenideElement requestSpin = $(".button__content .spin.spin_visible");
+    private static final SelenideElement notification = $(".notification_stick-to_right");
+
+    public static void waitingForDecision(){
+        requestSpin.waitUntil(hidden, 15000);
+        requestMessage.shouldBe(hidden);
+        notification.shouldBe(visible);
+    }
 
     @SneakyThrows
     private static Connection getConnection() {
