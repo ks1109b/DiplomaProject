@@ -22,6 +22,13 @@ public class BuyByCardPage {
     private final SelenideElement yearUnderField = $(byText("Год")).parent().$(".input__sub");
     private final SelenideElement ownerUnderField = $(byText("Владелец")).parent().$(".input__sub");
     private final SelenideElement cvcCvcUnderField = $(byText("CVC/CVV")).parent().$(".input__sub");
+    private static final SelenideElement requestMessage = $(byText("Отправляем запрос в Банк"));
+    private static final SelenideElement notification = $(".notification_stick-to_right");
+
+    public static void waitingForDecision(){
+        requestMessage.waitUntil(hidden, 15000);
+        notification.shouldBe(visible);
+    }
 
     public BuyByCardPage() {
         SelenideElement heading = $$("h3").find(exactText("Оплата по карте"));

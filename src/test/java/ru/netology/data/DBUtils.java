@@ -26,16 +26,6 @@ public class DBUtils {
     private static final String paymentSQLQuery = "SELECT * FROM payment_entity WHERE created IN (SELECT max(created) " +
             "FROM payment_entity);";
 
-    private static final SelenideElement requestMessage = $(byText("Отправляем запрос в Банк"));
-    private static final SelenideElement requestSpin = $(".button__content .spin.spin_visible");
-    private static final SelenideElement notification = $(".notification_stick-to_right");
-
-    public static void waitingForDecision(){
-        requestSpin.waitUntil(hidden, 15000);
-        requestMessage.shouldBe(hidden);
-        notification.shouldBe(visible);
-    }
-
     @SneakyThrows
     private static Connection getConnection() {
         try {
