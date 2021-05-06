@@ -45,7 +45,7 @@ public class DBTest {
         mainPage.getBuyByCardPage();
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(validCard);
-        BuyByCardPage.waitingForDecision();
+        buyByCardPage.waitingForDecision();
         var paymentRecord = getLastPaymentRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(
@@ -60,7 +60,7 @@ public class DBTest {
         mainPage.getBuyByCardPage();
         buyByCardPage = new BuyByCardPage();
         buyByCardPage.sendData(invalidCard);
-        BuyByCardPage.waitingForDecision();
+        buyByCardPage.waitingForDecision();
         var paymentRecord = getLastPaymentRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(
@@ -75,7 +75,7 @@ public class DBTest {
         mainPage.getBuyInCreditPage();
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(validCard);
-        BuyInCreditPage.waitingForDecision();
+        buyInCreditPage.waitingForDecision();
         var creditRecord = getLastCreditRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(
@@ -89,7 +89,7 @@ public class DBTest {
         mainPage.getBuyInCreditPage();
         buyInCreditPage = new BuyInCreditPage();
         buyInCreditPage.sendData(invalidCard);
-        BuyInCreditPage.waitingForDecision();
+        buyInCreditPage.waitingForDecision();
         var creditRecord = getLastCreditRecord();
         var orderRecord = getLastOrderRecord();
         assertAll(

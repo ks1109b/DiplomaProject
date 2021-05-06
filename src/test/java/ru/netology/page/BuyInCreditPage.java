@@ -25,7 +25,7 @@ public class BuyInCreditPage {
     private static final SelenideElement requestMessage = $(byText("Отправляем запрос в Банк"));
     private static final SelenideElement notification = $(".notification_stick-to_right");
 
-    public static void waitingForDecision(){
+    public void waitingForDecision(){
         requestMessage.waitUntil(hidden, 15000);
         notification.shouldBe(visible);
     }
